@@ -10,13 +10,15 @@
 readonly PROCESSED_LOCATION="./processed"
 readonly UTILITY_LOCATION="./utils"
 
-readonly NODE_ID_FILE_NAME="node_id"
-readonly NUMERAL_EDGE_FILE="edge_numeral"
+readonly NODE_ID_FILE_NAME="/node_id"
+readonly NUMERAL_EDGE_FILE="/edge_numeral"
 
+echo " ===== Calculating indegree and outdegree for each nodes! ===== "
 
 awk -f $UTILITY_LOCATION/"getInOutDegree.awk" \
-	-v node_id_file=$PROCESSED_LOCATION/$NODE_ID_FILE_NAME \
-	-v output_location=$PROCESSED_LOCATION/"dbpedia-nodes-in-put-name.tsv"
+	-v node_id_file=$PROCESSED_LOCATION$NODE_ID_FILE_NAME \
+	-v output_location=$PROCESSED_LOCATION"/dbpedia-nodes-in-put-name.tsv" \
 	$PROCESSED_LOCATION/$NUMERAL_EDGE_FILE
 
+echo " ===== Done! ===== "
 

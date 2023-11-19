@@ -55,6 +55,6 @@ awk -f $SCRIPT_LOCATION/getNumericID.awk \
 		-v  id_edge_output_file=$PROCESSED_LOCATION/'edge_id' \
 		-v  nodeID_ontology_map_file=$PROCESSED_LOCATION/'nodeID_ontologyID_map' \
 		-v  numeral_graph_output_file=$PROCESSED_LOCATION/'edge_numeral' \
-		"${DBPEDIA_DATA_LOCATION}${files_to_process}"
+		"${DBPEDIA_DATA_LOCATION}${filelist}"
 
 
