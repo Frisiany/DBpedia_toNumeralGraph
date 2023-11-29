@@ -21,8 +21,10 @@ BEGIN{
 END{
 	print "|	In/Out degree info getting process finished, writing in/out degree info into: ", output_location
 	for (nodeid in node_id_name_map){
-		 printf("%s %d %d \"%s\"\n", nodeid, indegree[nodeid], outdegree[nodeid], node_id_name_map[nodeid]) \
+		if(outdegree[nodeid] && indegree[nodeid]){
+			printf("%s %d %d \"%s\"\n", nodeid, indegree[nodeid], outdegree[nodeid], node_id_name_map[nodeid]) \
 		 	> output_location
+		}
 	}
 
 	close(output_location)
