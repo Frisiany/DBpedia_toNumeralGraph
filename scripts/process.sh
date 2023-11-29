@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Change [[DBPEDIA_DATA_LOCATION]] and [[filelist]] accordingly!"
+
 # folders' location
 readonly TEMP_LOCATION="./tmp"
 readonly SCRIPT_LOCATION="./scripts"
@@ -20,7 +22,7 @@ filelist=(
 
 readonly INSTANCE_TYPE_FILE="/instance_types_en.nq"
 
-# type edge's URI
+# type edge's URI(based on DBpedia3.9)
 readonly TYPE_EDGE_URI="<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"
 
 # mkdir if not exists
@@ -32,21 +34,29 @@ if [ ! -d "$PROCESSED_LOCATION" ]; then
 fi
 
 
-# get needed resources' URIs
+echo "0. get needed resources' URIs"
 for file in "${filelist[@]}"; do
 	file_with_folder="${DBPEDIA_DATA_LOCATION}/${file}"
     awk '{print $1}' "$file_with_folder"
 done | sort -u > $TEMP_LOCATION$TEMP_URI_FILE
 
 
-# (1) ----- get needed Ontologies based on needed URIs
+# (1) ----- get needed Ontologies based on needed resources' URIs
+echo "(1) ----- get needed Ontologies based on needed resources' URIs"
 awk -f $SCRIPT_LOCATION/getNeededOntologies.awk \
 		-v	type_edge_uri=$TYPE_EDGE_URI \
 		-v	temp_uri_file=$TEMP_LOCATION$TEMP_URI_FILE \
 		-v  output_location=$CUR_LOCATION$NEEDED_ONTOLOGIES_FILE \
-		$DBPEDIA_DATA_LOCATION$INSTANCE_TYPE_FILE
+		$DBPEDIA_DATA_LOCATION$INSTANCE_TYPE_FILE 
+
+cat $CUR_LOCATION$NEEDED_ONTOLOGIES_FILE | sort -u > temp 
+mv temp $CUR_LOCATION$NEEDED_ONTOLOGIES_FILE
+
+echo "number of unique ontology :"
+cat $CUR_LOCATION$NEEDED_ONTOLOGIES_FILE | wc -l
 
 # (2) ----- give each nodes and edges in DBpedia one unique numeral ID
+echo "(2) ----- give each nodes and edges in DBpedia one unique numeral ID"
 awk -f $SCRIPT_LOCATION/getNumericID.awk \
 		-v  ontology_file=$CUR_LOCATION$NEEDED_ONTOLOGIES_FILE \
 		-v  instance_type_file=$DBPEDIA_DATA_LOCATION$INSTANCE_TYPE_FILE \
