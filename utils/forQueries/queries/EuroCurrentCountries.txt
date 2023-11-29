@@ -1,0 +1,3 @@
+# intent :"Which countries in the European Union adopted the Euro?"
+
+<http://dbpedia.org/resource/Euro>	<http://dbpedia.org/ontology/currency>	<http://dbpedia.org/resource/Germany>

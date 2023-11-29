@@ -1,0 +1,3 @@
+# "string": "Which books were written by Danielle Steel?"
+
+<http://dbpedia.org/resource/Danielle_Steel> <http://dbpedia.org/ontology/author> <http://dbpedia.org/resource/Mixed_Blessings>

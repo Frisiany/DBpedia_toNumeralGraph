@@ -1,0 +1,3 @@
+# "string": "What languages are spoken in Pakistan?"
+
+<http://dbpedia.org/resource/Pakistan> <http://dbpedia.org/ontology/spokenIn> <http://dbpedia.org/resource/Urdu>

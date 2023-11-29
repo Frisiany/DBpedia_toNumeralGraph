@@ -1,0 +1,4 @@
+# Give me all Dutch parties.
+
+<http://dbpedia.org/resource/People's_Party_for_Freedom_and_Democracy> <http://dbpedia.org/ontology/leaderParty> <http://dbpedia.org/resource/Maastricht>
+<http://dbpedia.org/resource/People's_Party_for_Freedom_and_Democracy> <http://dbpedia.org/ontology/splitFromParty> <http://dbpedia.org/resource/Party_for_Freedom>

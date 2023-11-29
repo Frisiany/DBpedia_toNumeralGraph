@@ -22,7 +22,7 @@ readonly NUMERAL_EDGE_FILE="/edge_numeral"
 
 echo " ===== Calculating indegree and outdegree for each nodes! ===== "
 
-awk -f $UTILITY_LOCATION/"getInOutDegree.awk" \
+awk -f $UTILITY_LOCATION/"forGraphfile/getInOutDegree.awk" \
 	-v node_id_file=$PROCESSED_LOCATION$NODE_ID_FILE_NAME \
 	-v output_location=$OUTPUT_LOCATION"/dbpedia-nodes-in-out-name.tsv" \
 	$PROCESSED_LOCATION/$NUMERAL_EDGE_FILE

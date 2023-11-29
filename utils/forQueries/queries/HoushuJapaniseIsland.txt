@@ -1,0 +1,3 @@
+# 167: "string": "Give me all islands that belong to Japan."
+
+<http://dbpedia.org/resource/Honshu> <http://dbpedia.org/ontology/isPartOf> <http://dbpedia.org/resource/Tokyo>

@@ -1,0 +1,4 @@
+# "string": "Which country was Bill Gates born in?"
+# Intent: Birthplace for founder of Microsoft
+
+<http://dbpedia.org/resource/Bill_Gates>	<http://dbpedia.org/ontology/foundedBy>	<http://dbpedia.org/resource/Microsoft>

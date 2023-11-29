@@ -1,0 +1,3 @@
+# "string": "Give me all movies with Tom Cruise."
+
+<http://dbpedia.org/resource/Tom_Cruise> <http://dbpedia.org/ontology/starring> <http://dbpedia.org/resource/The_Firm_(1993_film)>

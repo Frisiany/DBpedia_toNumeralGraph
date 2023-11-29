@@ -1,10 +1,10 @@
 #!/bin/bash
 
-bash ./utils/inverseEdge.sh
+bash ./utils/forGraphfile/inverseEdge.sh
 
-bash ./utils/InOutDegree.sh
+bash ./utils/forGraphfile/InOutDegree.sh
 
-bash ./utils/labelsFrequency.sh
+bash ./utils/forGraphfile/labelsFrequency.sh
 
 readonly previous_edge_id_file="./processed/edge_id"
 readonly processed_edge_id_file="./processed/graphfiles/dbpedia-labels-mid-fb.txt"
