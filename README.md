@@ -1,7 +1,8 @@
 ## 1. Process Graph $ Queries
 ### 1.1 Graph
-1. runs `./scripts/process.sh`.(outputs stores in `./processed`)
-2. runs `./utils/forGraphfile/run.sh`.(outputs stores in `./processed/graphfiles`)
+1. change variable `[[DBPEDIA_DATA_LOCATION]]` in `./scripts/process.sh` accordingly.
+2. runs `./scripts/process.sh`.(outputs stores in `./processed`)
+3. runs `./utils/forGraphfile/run.sh`.(outputs stores in `./processed/graphfiles`)
 
 ### 1.2 Query
 1. specify query graph in RDF format, stores in `./utils/forQueries/queries`
