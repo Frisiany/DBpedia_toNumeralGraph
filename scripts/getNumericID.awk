@@ -23,7 +23,7 @@ BEGIN {
 
 {
 
-	if(node_ids[$1] || node_ids[$3]){
+	if(node_ids[$1] && node_ids[$3]){
 
 		if(!node_ids[$1]){
 			node_ids[$1] = ++node_id

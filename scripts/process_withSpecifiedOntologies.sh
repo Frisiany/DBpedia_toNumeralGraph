@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo " ===== ===== Loading DBpedia into graph by !! Specified Ontologies !! ===== ===== "
+
 echo "Change [[DBPEDIA_DATA_LOCATION]] and [[filelist]] accordingly!"
 
 # folders' location
@@ -61,7 +63,19 @@ if [ ! -d "$PROCESSED_LOCATION" ]; then
     mkdir -p "$PROCESSED_LOCATION"  
 fi
 
+readonly CATTED_TMP_FILENAME="${DBPEDIA_DATA_LOCATION}/catted_tmpFile.nq"
+if [ -f "${CATTED_TMP_FILENAME}" ]; then
+	echo "(2.1) ----- cat all needed file into a temp file"
+	for file in "${filelist[@]}"; do
+	    cat "${DBPEDIA_DATA_LOCATION}${file}" >> "${CATTED_TMP_FILENAME}"
+	done
+	echo "|   Done!"
+else
+    echo "(2.1) ----- catted file already esists!"
+fi
+
 # (2) ----- give each nodes and edges in DBpedia one unique numeral ID
+echo "(2.2) ----- give each nodes and edges in DBpedia one unique numeral ID"
 awk -f $SCRIPT_LOCATION/getNumericID.awk \
 		-v  ontology_file=$CUR_LOCATION$NEEDED_ONTOLOGIES_FILE \
 		-v  instance_type_file=$DBPEDIA_DATA_LOCATION$INSTANCE_TYPE_FILE \
@@ -70,4 +84,10 @@ awk -f $SCRIPT_LOCATION/getNumericID.awk \
 		-v  id_edge_output_file=$PROCESSED_LOCATION/'edge_id' \
 		-v  nodeID_ontology_map_file=$PROCESSED_LOCATION/'nodeID_ontologyID_map' \
 		-v  numeral_graph_output_file=$PROCESSED_LOCATION/'edge_numeral' \
-		"${DBPEDIA_DATA_LOCATION}${filelist}"
+		"${CATTED_TMP_FILENAME}"
+
+echo "(2.3) ----- remove the tmp file"
+rm "${CATTED_TMP_FILENAME}"
+if [! -f "${CATTED_TMP_FILENAME}"]; then
+	echo "|   Done!"
+fi 

@@ -20,6 +20,8 @@ readonly NEEDED_ONTOLOGIES_FILE="/ontologiesNeeded.txt"
 #	"/persondata_en.nq"
 #)
 
+echo " ===== ===== Loading DBpedia into graph by !! Files with interest !! ===== ===== "
+
 filelist=(
     "/article_categories_en.nq"
     "/article_templates_en.nq"
@@ -73,29 +75,41 @@ if [ ! -d "$PROCESSED_LOCATION" ]; then
 fi
 
 
-echo "0. get needed resources' URIs"
+echo "(0) ----- get needed resources' URIs"
 for file in "${filelist[@]}"; do
 	file_with_folder="${DBPEDIA_DATA_LOCATION}/${file}"
     awk '{print $1}' "$file_with_folder"
 done | sort -u > $TEMP_LOCATION$TEMP_URI_FILE
 
 
-# (1) ----- get needed Ontologies based on needed resources' URIs
-echo "(1) ----- get needed Ontologies based on needed resources' URIs"
+echo "(1.1) ----- get needed Ontologies based on needed resources' URIs"
 awk -f $SCRIPT_LOCATION/getNeededOntologies.awk \
 		-v	type_edge_uri=$TYPE_EDGE_URI \
 		-v	temp_uri_file=$TEMP_LOCATION$TEMP_URI_FILE \
 		-v  output_location=$CUR_LOCATION$NEEDED_ONTOLOGIES_FILE \
 		$DBPEDIA_DATA_LOCATION$INSTANCE_TYPE_FILE 
 
+
+echo "(1.2) ----- contain unique ontology"
 cat $CUR_LOCATION$NEEDED_ONTOLOGIES_FILE | sort -u > temp 
 mv temp $CUR_LOCATION$NEEDED_ONTOLOGIES_FILE
 
-echo "number of unique ontology :"
+echo "|   number of unique ontology :"
 cat $CUR_LOCATION$NEEDED_ONTOLOGIES_FILE | wc -l
 
+readonly CATTED_TMP_FILENAME="${DBPEDIA_DATA_LOCATION}/catted_tmpFile.nq"
+if [ -f "${CATTED_TMP_FILENAME}" ]; then
+	echo "(2.1) ----- cat all needed file into a temp file"
+	for file in "${filelist[@]}"; do
+	    cat "${DBPEDIA_DATA_LOCATION}${file}" >> "${CATTED_TMP_FILENAME}"
+	done
+	echo "|   Done!"
+else
+    echo "(2.1) ----- catted file already esists!"
+fi
+
 # (2) ----- give each nodes and edges in DBpedia one unique numeral ID
-echo "(2) ----- give each nodes and edges in DBpedia one unique numeral ID"
+echo "(2.2) ----- give each nodes and edges in DBpedia one unique numeral ID"
 awk -f $SCRIPT_LOCATION/getNumericID.awk \
 		-v  ontology_file=$CUR_LOCATION$NEEDED_ONTOLOGIES_FILE \
 		-v  instance_type_file=$DBPEDIA_DATA_LOCATION$INSTANCE_TYPE_FILE \
@@ -104,6 +118,10 @@ awk -f $SCRIPT_LOCATION/getNumericID.awk \
 		-v  id_edge_output_file=$PROCESSED_LOCATION/'edge_id' \
 		-v  nodeID_ontology_map_file=$PROCESSED_LOCATION/'nodeID_ontologyID_map' \
 		-v  numeral_graph_output_file=$PROCESSED_LOCATION/'edge_numeral' \
-		"${DBPEDIA_DATA_LOCATION}${filelist}"
+		"${CATTED_TMP_FILENAME}"
 
-
+echo "(2.3) ----- remove the tmp file"
+rm "${CATTED_TMP_FILENAME}"
+if [! -f "${CATTED_TMP_FILENAME}"]; then
+	echo "|   Done!"
+fi 

@@ -1,7 +1,11 @@
 ## 1. Process Graph $ Queries
+> 
+
 ### 1.1 Graph
 1. change variable `[[DBPEDIA_DATA_LOCATION]]` in `./scripts/process.sh` accordingly.
-2. runs `./scripts/process.sh`.(outputs stores in `./processed`)
+2. runs to get needed graph(outputs stores in `./processed`)
+	- `./scripts/process.sh`, get graph based on files interedted in
+	- `./scripts/process_withSpeficiedOntologies.sh`, get graph based on ontologies interedted in
 3. runs `./utils/forGraphfile/run.sh`.(outputs stores in `./processed/graphfiles`)
 
 ### 1.2 Query
