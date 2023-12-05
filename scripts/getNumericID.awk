@@ -27,10 +27,12 @@ BEGIN {
 
 		if(!node_ids[$1]){
 			node_ids[$1] = ++node_id
+			print node_id, $1 > id_node_output_file
 		}
 
 		if(!node_ids[$3]){
 			node_ids[$3] = ++node_id
+			print node_id, $1 > id_node_output_file
 		}
 
 		if(!edge_ids[$2]){
